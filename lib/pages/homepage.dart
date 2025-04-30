@@ -2,6 +2,7 @@ import 'package:eventcountdown/utilities/drawer.dart';
 import 'package:eventcountdown/widgets/custom_app_bar.dart';
 import 'package:eventcountdown/widgets/custom_floating_action_button.dart';
 import 'package:flutter/material.dart';
+import 'package:eventcountdown/methods/image_picker.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -22,9 +23,15 @@ class Homepage extends StatelessWidget {
             Container(
               // decoration: BoxDecoration(
               //   image: DecorationImage(
-              //     image: AssetImage(
-              //       assetName)
-              //       fit: BoxFit.cover)
+              //     image:
+              //         backgroundImage != null
+              //             ? FileImage(backgroundImage)
+              //             : const AssetImage(
+              //                   'assets/images/default_background.jpg',
+              //                 )
+              //                 as ImageProvider,
+              //     fit: BoxFit.cover,
+              //   ),
               // ),
               margin: const EdgeInsets.all(4),
               height: 100,

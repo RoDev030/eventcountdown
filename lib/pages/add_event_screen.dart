@@ -1,3 +1,4 @@
+import 'package:eventcountdown/methods/image_picker.dart';
 import 'package:flutter/material.dart';
 import '../database/event_database.dart';
 import '/utilities/drawer.dart';
@@ -246,6 +247,12 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   },
                   child: Text("Add Event"),
                   //icon: add_photo_alternate_outlined
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    pickImage();
+                  },
+                  child: Icon(Icons.add_photo_alternate_outlined),
                 ),
               ],
             ),
