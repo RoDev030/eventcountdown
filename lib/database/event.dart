@@ -19,6 +19,8 @@ class Event {
   @HiveField(4)
   final String eventDescription;
 
+  @HiveField(5)
+  final String? eventImagePath;
 
   Event({
     required this.id,
@@ -26,5 +28,6 @@ class Event {
     required this.eventDateTime,
     required this.eventLocation,
     required this.eventDescription,
+    this.eventImagePath,
   });
 }

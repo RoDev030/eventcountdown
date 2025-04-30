@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:eventcountdown/methods/image_picker.dart';
 import 'package:flutter/material.dart';
 import '../database/event_database.dart';
@@ -19,6 +20,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+
+  String? _eventImagePath;
 
   @override
   void dispose() {
@@ -210,13 +213,18 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         context,
                         listen: false,
                       );
-
+                      // parse date
                       final DateTime selectedDate = DateFormat(
                         'dd-MM-yyyy',
                       ).parse(_dateController.text);
-                      final TimeOfDay selectedTime = TimeOfDay(
-                        hour: int.parse(_timeController.text.split(":")[0]),
-                        minute: int.parse(_timeController.text.split(":")[1]),
+
+                      // parse time + account for AM/PM
+                      final DateFormat timeFormat = DateFormat('h:mm a');
+                      DateTime parsedTime = timeFormat.parse(
+                        _timeController.text,
+                      );
+                      final TimeOfDay selectedTime = TimeOfDay.fromDateTime(
+                        parsedTime,
                       );
 
                       final DateTime fullDateTime = DateTime(
@@ -232,6 +240,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         fullDateTime,
                         _locationController.text,
                         _descriptionController.text,
+                        eventImagePath: _eventImagePath,
                       );
 
                       if (mounted) {
@@ -249,11 +258,30 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   //icon: add_photo_alternate_outlined
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    pickImage();
+                  onPressed: () async {
+                    final image = await pickImage();
+                    if (image != null && mounted) {
+                      setState(() {
+                        _eventImagePath = image.path;
+                      });
+                    }
                   },
                   child: Icon(Icons.add_photo_alternate_outlined),
                 ),
+                if (_eventImagePath != null) ...[
+                  SizedBox(height: 12),
+                  Text(
+                    'Gekozen afbeelding:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 10),
+                  Image.file(
+                    File(_eventImagePath!),
+                    height: 150,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ],
               ],
             ),
           ),
