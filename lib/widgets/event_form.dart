@@ -24,9 +24,13 @@ class EventForm extends StatelessWidget {
         TextFormField(
           controller: nameController,
           maxLength: 75,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             counterText: "",
             labelText: "Event Name",
+            labelStyle: TextStyle(color: Colors.grey),
+            floatingLabelStyle: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+            ),
             border: OutlineInputBorder(),
           ),
           validator:
@@ -52,8 +56,13 @@ class EventForm extends StatelessWidget {
                     ).format(pickedDate);
                   }
                 },
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: "Event Date",
+                  labelStyle: TextStyle(color: Colors.grey),
+                  floatingLabelStyle: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+
                   border: OutlineInputBorder(),
                 ),
                 validator:
@@ -75,8 +84,12 @@ class EventForm extends StatelessWidget {
                     timeController.text = pickedTime.format(context);
                   }
                 },
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: "Event Time",
+                  labelStyle: TextStyle(color: Colors.grey),
+                  floatingLabelStyle: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                   border: OutlineInputBorder(),
                 ),
                 validator:
@@ -89,8 +102,12 @@ class EventForm extends StatelessWidget {
         const SizedBox(height: 12),
         TextFormField(
           controller: locationController,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             labelText: "Event Location",
+            labelStyle: TextStyle(color: Colors.grey),
+            floatingLabelStyle: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+            ),
             border: OutlineInputBorder(),
           ),
           validator:
@@ -101,9 +118,13 @@ class EventForm extends StatelessWidget {
         TextFormField(
           controller: descriptionController,
           maxLength: 300,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             counterText: "",
             labelText: "Event Description",
+            labelStyle: TextStyle(color: Colors.grey),
+            floatingLabelStyle: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+            ),
             border: OutlineInputBorder(),
           ),
           validator:

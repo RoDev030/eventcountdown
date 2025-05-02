@@ -33,6 +33,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: const Text("Add Event")),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -47,14 +48,21 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 locationController: _locationController,
                 descriptionController: _descriptionController,
               ),
-              EventImagePicker(
-                eventImagePath: _eventImagePath,
-                onImageSelected: (imagePath) {
-                  setState(() {
-                    _eventImagePath = imagePath;
-                  });
-                },
+              const SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  EventImagePicker(
+                    eventImagePath: _eventImagePath,
+                    onImageSelected: (imagePath) {
+                      setState(() {
+                        _eventImagePath = imagePath;
+                      });
+                    },
+                  ),
+                ],
               ),
+              const SizedBox(height: 12),
               EventSubmitButton(
                 formKey: _formkey,
                 nameController: _nameController,

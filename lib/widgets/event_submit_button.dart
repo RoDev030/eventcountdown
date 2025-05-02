@@ -23,6 +23,23 @@ class EventSubmitButton extends StatelessWidget {
     required this.eventImagePath,
   });
 
+  DateTime parseFlexibleTime(String timeString) {
+    final List<DateFormat> formats = [
+      DateFormat('h:mm a'), // 12h formaat
+      DateFormat('HH:mm'), // 24h formaat
+    ];
+
+    for (final format in formats) {
+      try {
+        return format.parse(timeString);
+      } catch (_) {
+        continue;
+      }
+    }
+
+    throw FormatException('Geen geldig tijdformaat: $timeString');
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -37,7 +54,8 @@ class EventSubmitButton extends StatelessWidget {
             final selectedDate = DateFormat(
               'dd-MM-yyyy',
             ).parse(dateController.text);
-            final parsedTime = DateFormat('h:mm a').parse(timeController.text);
+            final parsedTime = parseFlexibleTime(timeController.text);
+            ;
             final selectedTime = TimeOfDay.fromDateTime(parsedTime);
 
             final fullDateTime = DateTime(
