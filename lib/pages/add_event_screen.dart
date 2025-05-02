@@ -1,3 +1,4 @@
+import 'package:eventcountdown/utilities/submit_event.dart';
 import 'package:flutter/material.dart';
 import 'package:eventcountdown/widgets/event_form.dart';
 import 'package:eventcountdown/widgets/event_image_picker.dart';
@@ -34,8 +35,26 @@ class _AddEventScreenState extends State<AddEventScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: const Text("Add Event")),
-      body: Padding(
+      appBar: AppBar(
+        title: const Text("New Event"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.check),
+            onPressed:
+                () => submitEvent(
+                  context: context,
+                  formKey: _formkey,
+                  nameController: _nameController,
+                  dateController: _dateController,
+                  timeController: _timeController,
+                  locationController: _locationController,
+                  descriptionController: _descriptionController,
+                  eventImagePath: _eventImagePath,
+                ),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(12.0),
         child: Form(
           key: _formkey,
@@ -49,18 +68,13 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 descriptionController: _descriptionController,
               ),
               const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  EventImagePicker(
-                    eventImagePath: _eventImagePath,
-                    onImageSelected: (imagePath) {
-                      setState(() {
-                        _eventImagePath = imagePath;
-                      });
-                    },
-                  ),
-                ],
+              EventImagePicker(
+                eventImagePath: _eventImagePath,
+                onImageSelected: (imagePath) {
+                  setState(() {
+                    _eventImagePath = imagePath;
+                  });
+                },
               ),
               const SizedBox(height: 12),
               EventSubmitButton(

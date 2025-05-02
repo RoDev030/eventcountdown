@@ -17,8 +17,9 @@ class EventImagePicker extends StatelessWidget {
     return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text('\t \t Selecteer \n achtergrond'),
+            Text('\t \t Select \n background'),
             SizedBox(width: 8.0),
             ElevatedButton(
               onPressed: () async {

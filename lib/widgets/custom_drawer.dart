@@ -15,17 +15,26 @@ class CustomDrawer extends StatelessWidget {
           _buildItem(
             icon: Icons.home_filled,
             title: "Home",
-            onTap: () => Navigator.of(context).pushNamed("/"),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).pushNamed("/");
+            },
           ),
           _buildItem(
             icon: Icons.settings,
             title: "Settings",
-            onTap: () => Navigator.of(context).pushNamed("/"),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).pushNamed("/");
+            },
           ),
           _buildItem(
             icon: Icons.add,
             title: "Add Event",
-            onTap: () => Navigator.of(context).pushNamed("/add_event_screen"),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).pushNamed("/add_event_screen");
+            },
           ),
           // _buildItem(
           //   icon: Icons.add,
