@@ -19,8 +19,8 @@ samples, guidance on mobile development, and a full API reference.
 
 ## bestaande problematiek
 Prio:
-1. Afbeelding opslaan in Hive XX
-    a. opruimen add_event_screen
+1. Afbeelding opslaan in Hive (done)
+    a. opruimen add_event_screen (done)
 2. Countdowntimer bouwen op homepage
 3. Countdowntimer tijd op laten halen uit Hive
 4. Container achtergrond op laten halen uit 
