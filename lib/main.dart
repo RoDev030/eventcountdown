@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'pages/add_event_screen.dart';
 import 'package:provider/provider.dart';
-import 'database/event_database.dart';
+import 'models/event_database.dart';
 import 'themes/theme_provider.dart';
 import 'pages/homepage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'database/event.dart';
+import 'models/event.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // verplicht bij async main
@@ -37,9 +37,9 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: themeProvider.themeData,
-          initialRoute: '/add_event_screen',
+          initialRoute: '/',
           routes: {
-            '/': (context) => const Homepage(),
+            '/': (context) => const HomePage(),
             '/add_event_screen': (context) => const AddEventScreen(),
             //'/settings_screen': (context) => const SettingsScreen(),
           },

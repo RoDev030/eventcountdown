@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:eventcountdown/methods/image_picker.dart';
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 
 class EventImagePicker extends StatelessWidget {
   final String? eventImagePath;

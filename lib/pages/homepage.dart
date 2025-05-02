@@ -1,45 +1,37 @@
-import 'package:eventcountdown/utilities/drawer.dart';
 import 'package:eventcountdown/widgets/custom_app_bar.dart';
+import 'package:eventcountdown/widgets/custom_drawer.dart';
 import 'package:eventcountdown/widgets/custom_floating_action_button.dart';
 import 'package:flutter/material.dart';
-import 'package:eventcountdown/methods/image_picker.dart';
+import 'package:provider/provider.dart';
+import '../models/event_database.dart';
+import '../widgets/event_list_view.dart';
+import 'package:hive/hive.dart';
+import '../models/event.dart';
 
-class Homepage extends StatelessWidget {
-  const Homepage({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final eventDatabase = Provider.of<EventDatabase>(context);
+
     return Scaffold(
-      appBar: CustomAppBar(title: "Countdown App"),
+      appBar: CustomAppBar(title: 'Mijn Events'),
       drawer: CustomDrawer(),
-      floatingActionButton: CustomFloatingActionButton(
-        routeName: "/add_event_screen",
+      body: ValueListenableBuilder(
+        valueListenable: eventDatabase.listenToEvents(),
+        builder: (context, Box<Event> box, _) {
+          final events = box.values.toList();
+
+          if (events.isEmpty) {
+            return const Center(child: Text('Nog geen events toegevoegd.'));
+          }
+
+          return EventListView(events: events);
+        },
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              // decoration: BoxDecoration(
-              //   image: DecorationImage(
-              //     image:
-              //         backgroundImage != null
-              //             ? FileImage(backgroundImage)
-              //             : const AssetImage(
-              //                   'assets/images/default_background.jpg',
-              //                 )
-              //                 as ImageProvider,
-              //     fit: BoxFit.cover,
-              //   ),
-              // ),
-              margin: const EdgeInsets.all(4),
-              height: 100,
-              width: 100,
-              color: Theme.of(context).primaryColor,
-            ),
-          ],
-        ),
+      floatingActionButton: CustomFloatingActionButton(
+        routeName: '/add_event_screen',
       ),
     );
   }

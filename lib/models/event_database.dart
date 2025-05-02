@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'event.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter/foundation.dart';
 
 class EventDatabase extends ChangeNotifier {
   late Box<Event> eventBox;
@@ -52,5 +53,9 @@ class EventDatabase extends ChangeNotifier {
   Future<void> deleteEvent(Event event) async {
     await eventBox.delete(event.id);
     await getEvents();
+  }
+
+  ValueListenable<Box<Event>> listenToEvents() {
+    return eventBox.listenable();
   }
 }
