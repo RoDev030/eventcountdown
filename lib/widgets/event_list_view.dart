@@ -10,12 +10,14 @@ class EventListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 40),
+      scrollDirection: Axis.horizontal,
       itemCount: events.length,
       itemBuilder: (context, index) {
         final event = events[index];
         return EventCard(event: event);
       },
-      separatorBuilder: (context, index) => const Divider(),
+      separatorBuilder: (context, index) => SizedBox(width: 20),
     );
   }
 }

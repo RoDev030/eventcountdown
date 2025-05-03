@@ -21,9 +21,13 @@ samples, guidance on mobile development, and a full API reference.
 Prio:
 1. Afbeelding opslaan in Hive (done)
     a. opruimen add_event_screen (done)
+
+
 2. Countdowntimer bouwen op homepage
+ a. listview ombouwen naar pageview zodat het er beter uitziet
 3. Countdowntimer tijd op laten halen uit Hive
-4. Container achtergrond op laten halen uit 
+a. beperken tot seconden ipv kleinere aantallen
+4. Container achtergrond op laten halen uit hive (done)
 
 
 Non-prio:
@@ -31,4 +35,8 @@ Non-prio:
 2. Orientatie blokkeren. We doen niet aan landscape losers
 3. Als je vanuit add event de app verlaat en dat doet via de pop scope melding staat de drawer nog open
 4. transitie tussen schermen heeft nog geen animatie (wel echt een basic chille functie)
+5. flutter ndk hardcoded for ndkVersion = "27.0.12077973"
+
+
+
 
