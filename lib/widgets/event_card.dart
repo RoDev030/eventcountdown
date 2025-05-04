@@ -1,14 +1,21 @@
 import 'dart:io';
 import 'package:eventcountdown/models/event_database.dart';
+import 'package:eventcountdown/widgets/countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:slide_countdown/slide_countdown.dart';
 import '../models/event.dart';
 import 'package:provider/provider.dart';
 
-class EventCard extends StatelessWidget {
+class EventCard extends StatefulWidget {
   final Event event;
 
   const EventCard({super.key, required this.event});
 
+  @override
+  State<EventCard> createState() => _EventCardState();
+}
+
+class _EventCardState extends State<EventCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -17,8 +24,8 @@ class EventCard extends StatelessWidget {
           context: context,
           builder:
               (context) => AlertDialog(
-                title: Text(event.eventName),
-                content: Text(event.eventDescription),
+                title: Text(widget.event.eventName),
+                content: Text(widget.event.eventDescription),
                 actions: [
                   TextButton(
                     onPressed: () {
@@ -52,7 +59,7 @@ class EventCard extends StatelessWidget {
                       Provider.of<EventDatabase>(
                         context,
                         listen: false,
-                      ).deleteEvent(event);
+                      ).deleteEvent(widget.event);
                       Navigator.of(context).pop();
                     },
                     child: const Text('Delete'),
@@ -61,7 +68,7 @@ class EventCard extends StatelessWidget {
               ),
         );
       },
-      child: buildEventCard(event),
+      child: buildEventCard(widget.event),
     );
   }
 
@@ -70,7 +77,6 @@ class EventCard extends StatelessWidget {
       width: 340,
       height: 200,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
         image:
             event.eventImagePath != null &&
                     File(event.eventImagePath!).existsSync()
@@ -88,13 +94,46 @@ class EventCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            event.eventName,
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          Text(
-            event.eventDateTime.toString(),
-            style: TextStyle(color: Colors.white, fontSize: 16),
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.black38,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  event.eventName,
+                  style: const TextStyle(color: Colors.white, fontSize: 30),
+                ),
+                const SizedBox(height: 8),
+                SlideCountdown(
+                  duration: Duration(
+                    days: event.eventDateTime.difference(DateTime.now()).inDays,
+                    hours: event.eventDateTime
+                        .difference(DateTime.now())
+                        .inHours
+                        .remainder(24),
+                    minutes: event.eventDateTime
+                        .difference(DateTime.now())
+                        .inMinutes
+                        .remainder(60),
+                    seconds: event.eventDateTime
+                        .difference(DateTime.now())
+                        .inSeconds
+                        .remainder(60),
+                  ),
+                  separatorType: SeparatorType.title,
+                  slideDirection: SlideDirection.up,
+                  separatorStyle: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.white70,
+                  ),
+                  decoration: const BoxDecoration(color: Colors.transparent),
+                ),
+              ],
+            ),
           ),
         ],
       ),

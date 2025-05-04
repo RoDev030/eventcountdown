@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'pages/add_event_screen.dart';
 import 'package:provider/provider.dart';
 import 'models/event_database.dart';
@@ -8,7 +9,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'models/event.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // verplicht bij async main
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   // Init Hive
   await Hive.initFlutter();
