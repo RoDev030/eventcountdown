@@ -36,7 +36,52 @@ Non-prio:
 3. Als je vanuit add event de app verlaat en dat doet via de pop scope melding staat de drawer nog open
 4. transitie tussen schermen heeft nog geen animatie (wel echt een basic chille functie)
 5. flutter ndk hardcoded for ndkVersion = "27.0.12077973"
+6. extract gesture detector from eventcard
 
+bool hasChanges() {
+    return _nameController.text.isNotEmpty ||
+        _dateController.text.isNotEmpty ||
+        _timeController.text.isNotEmpty ||
+        _locationController.text.isNotEmpty ||
+        _descriptionController.text.isNotEmpty;
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    //add warning if user tries to leave without saving
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) {
+          return;
+        }
 
+        if (hasChanges()) {
+          final shouldDiscard = await showDialog<bool>(
+            context: context,
+            builder:
+                (context) => AlertDialog(
+                  title: const Text('Discard changes?'),
+                  content: const Text(
+                    'Are you sure you want to discard your changes?',
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(true),
+                      child: const Text('Discard'),
+                    ),
+                  ],
+                ),
+          );
 
+          if (shouldDiscard == true) {
+            Navigator.of(context).pop(); // Go back to previous screen.
+          }
+        } else {
+          Navigator.of(context).pop(); // Go back to previous screen.
+        }
+      },

@@ -4,7 +4,7 @@ import 'package:eventcountdown/widgets/custom_floating_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/event_database.dart';
-import '../widgets/event_list_view.dart';
+import '../widgets/event_page_view.dart';
 import 'package:hive/hive.dart';
 import '../models/event.dart';
 
@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
             return const Center(child: Text('Nog geen events toegevoegd.'));
           }
 
-          return EventListView(events: events);
+          return EventPageView(events: events);
         },
       ),
       floatingActionButton: CustomFloatingActionButton(

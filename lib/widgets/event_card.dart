@@ -1,44 +1,65 @@
 import 'dart:io';
+import 'package:eventcountdown/models/event_database.dart';
 import 'package:flutter/material.dart';
 import '../models/event.dart';
-import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class EventCard extends StatelessWidget {
   final Event event;
 
   const EventCard({super.key, required this.event});
 
-  //   @override
-  //   Widget build(BuildContext context) {
-  //     return ListTile(
-  //       leading:
-  //           event.eventImagePath != null
-  //               ? ClipRRect(
-  //                 borderRadius: BorderRadius.circular(8),
-  //                 child: Image.file(
-  //                   File(event.eventImagePath!),
-  //                   width: 50,
-  //                   height: 50,
-  //                   fit: BoxFit.cover,
-  //                 ),
-  //               )
-  //               : const Icon(Icons.event),
-  //       title: Text(event.eventName),
-  //       subtitle: Text(
-  //         DateFormat('dd MMM yyyy – HH:mm').format(event.eventDateTime),
-  //       ),
-  //       onTap: () {
-  //         // Naar event detailpagina navigeren (later)
-  //       },
-  //     );
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Handle tap event (e.g., navigate to event details)
+        showDialog(
+          context: context,
+          builder:
+              (context) => AlertDialog(
+                title: Text(event.eventName),
+                content: Text(event.eventDescription),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      // Handle view details action
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('View Details'),
+                  ),
+                ],
+              ),
+        );
+      },
+      onLongPress: () {
+        showDialog(
+          context: context,
+          builder:
+              (context) => AlertDialog(
+                title: const Text('Event Options'),
+                content: const Text('Edit or delete this event.'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      // Handle edit action
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Edit'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      // Handle delete action
+                      Provider.of<EventDatabase>(
+                        context,
+                        listen: false,
+                      ).deleteEvent(event);
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Delete'),
+                  ),
+                ],
+              ),
+        );
       },
       child: buildEventCard(event),
     );

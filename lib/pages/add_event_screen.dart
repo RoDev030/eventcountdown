@@ -1,3 +1,4 @@
+import 'package:eventcountdown/utilities/pop_scope.dart';
 import 'package:eventcountdown/utilities/submit_event.dart';
 import 'package:flutter/material.dart';
 import 'package:eventcountdown/widgets/event_form.dart';
@@ -21,6 +22,15 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   String? _eventImagePath;
 
+  bool hasChanges() {
+    return _nameController.text.isNotEmpty ||
+        _dateController.text.isNotEmpty ||
+        _timeController.text.isNotEmpty ||
+        _locationController.text.isNotEmpty ||
+        _descriptionController.text.isNotEmpty ||
+        _eventImagePath != null;
+  }
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -33,16 +43,53 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const Text("New Event"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.check),
-            onPressed:
-                () => submitEvent(
-                  context: context,
+    return ConfirmOnPop(
+      hasChanges: hasChanges,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: const Text("New Event"),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.check),
+              onPressed:
+                  () => submitEvent(
+                    context: context,
+                    formKey: _formkey,
+                    nameController: _nameController,
+                    dateController: _dateController,
+                    timeController: _timeController,
+                    locationController: _locationController,
+                    descriptionController: _descriptionController,
+                    eventImagePath: _eventImagePath,
+                  ),
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(12.0),
+          child: Form(
+            key: _formkey,
+            child: Column(
+              children: [
+                EventForm(
+                  nameController: _nameController,
+                  dateController: _dateController,
+                  timeController: _timeController,
+                  locationController: _locationController,
+                  descriptionController: _descriptionController,
+                ),
+                const SizedBox(height: 12),
+                EventImagePicker(
+                  eventImagePath: _eventImagePath,
+                  onImageSelected: (imagePath) {
+                    setState(() {
+                      _eventImagePath = imagePath;
+                    });
+                  },
+                ),
+                const SizedBox(height: 12),
+                EventSubmitButton(
                   formKey: _formkey,
                   nameController: _nameController,
                   dateController: _dateController,
@@ -51,42 +98,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   descriptionController: _descriptionController,
                   eventImagePath: _eventImagePath,
                 ),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(12.0),
-        child: Form(
-          key: _formkey,
-          child: Column(
-            children: [
-              EventForm(
-                nameController: _nameController,
-                dateController: _dateController,
-                timeController: _timeController,
-                locationController: _locationController,
-                descriptionController: _descriptionController,
-              ),
-              const SizedBox(height: 12),
-              EventImagePicker(
-                eventImagePath: _eventImagePath,
-                onImageSelected: (imagePath) {
-                  setState(() {
-                    _eventImagePath = imagePath;
-                  });
-                },
-              ),
-              const SizedBox(height: 12),
-              EventSubmitButton(
-                formKey: _formkey,
-                nameController: _nameController,
-                dateController: _dateController,
-                timeController: _timeController,
-                locationController: _locationController,
-                descriptionController: _descriptionController,
-                eventImagePath: _eventImagePath,
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
