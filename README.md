@@ -28,14 +28,15 @@ Prio:
 3. Countdowntimer tijd op laten halen uit Hive (done)
 a. beperken tot seconden ipv kleinere aantallen
 4. Container achtergrond op laten halen uit hive (done)
-5. edit function and UI
+5. edit function and UI (done)
 6. prep for V1 release
+7. non-prio 4 toevoegen > kleurschema eef toevoegen
 
 
 Non-prio:
-1. Je kan het scherm nog steeds verlaten als er data in staat >> popscope uitbreiden of onderzoeken hoe dit tegen kan worden gehouden
-2. Orientatie blokkeren. We doen niet aan landscape losers
-3. Als je vanuit add event de app verlaat en dat doet via de pop scope melding staat de drawer nog open
+1. Je kan het scherm nog steeds verlaten als er data in staat >> popscope uitbreiden of onderzoeken hoe dit tegen kan worden gehouden (done)
+2. Orientatie blokkeren. We doen niet aan landscape losers (done)
+3. Als je vanuit add event de app verlaat en dat doet via de pop scope melding staat de drawer nog open (done)
 4. transitie tussen schermen heeft nog geen animatie (wel echt een basic chille functie)
 5. flutter ndk hardcoded for ndkVersion = "27.0.12077973"
 6. extract gesture detector from eventcard (done)
