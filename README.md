@@ -28,6 +28,8 @@ Prio:
 3. Countdowntimer tijd op laten halen uit Hive (done)
 a. beperken tot seconden ipv kleinere aantallen
 4. Container achtergrond op laten halen uit hive (done)
+5. edit function and UI
+6. prep for V1 release
 
 
 Non-prio:

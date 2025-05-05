@@ -1,3 +1,4 @@
+import 'package:eventcountdown/pages/edit_event_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'pages/add_event_screen.dart';
@@ -43,7 +44,10 @@ class MyApp extends StatelessWidget {
           routes: {
             '/': (context) => const HomePage(),
             '/add_event_screen': (context) => const AddEventScreen(),
-            //'/settings_screen': (context) => const SettingsScreen(),
+            '/edit_event_screen': (context) {
+              final event = ModalRoute.of(context)!.settings.arguments as Event;
+              return EditEventScreen(event: event);
+            },
           },
         );
       },

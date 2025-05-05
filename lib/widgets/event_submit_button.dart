@@ -9,6 +9,8 @@ class EventSubmitButton extends StatelessWidget {
   final TextEditingController locationController;
   final TextEditingController descriptionController;
   final String? eventImagePath;
+  final VoidCallback? onPressed;
+  final String buttonLabel;
 
   const EventSubmitButton({
     super.key,
@@ -19,12 +21,15 @@ class EventSubmitButton extends StatelessWidget {
     required this.locationController,
     required this.descriptionController,
     required this.eventImagePath,
+    this.onPressed,
+    this.buttonLabel = "Add Event",
   });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed:
+          onPressed ??
           () => submitEvent(
             context: context,
             formKey: formKey,
@@ -35,7 +40,7 @@ class EventSubmitButton extends StatelessWidget {
             descriptionController: descriptionController,
             eventImagePath: eventImagePath,
           ),
-      child: const Text("Add Event"),
+      child: Text(buttonLabel),
     );
   }
 }

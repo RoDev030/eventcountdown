@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:eventcountdown/models/event_database.dart';
-import 'package:eventcountdown/widgets/countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 import '../models/event.dart';
@@ -48,8 +47,12 @@ class _EventCardState extends State<EventCard> {
                 actions: [
                   TextButton(
                     onPressed: () {
-                      // Handle edit action
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pop(); // sluit het dialoog
+                      Navigator.pushNamed(
+                        context,
+                        '/edit_event_screen',
+                        arguments: widget.event,
+                      );
                     },
                     child: const Text('Edit'),
                   ),
