@@ -24,7 +24,6 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => EventDatabase()),
       ],
-
       child: const MyApp(),
     ),
   );
@@ -41,13 +40,45 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: themeProvider.themeData,
           initialRoute: '/',
-          routes: {
-            '/': (context) => const HomePage(),
-            '/add_event_screen': (context) => const AddEventScreen(),
-            '/edit_event_screen': (context) {
-              final event = ModalRoute.of(context)!.settings.arguments as Event;
-              return EditEventScreen(event: event);
-            },
+          onGenerateRoute: (settings) {
+            Widget page;
+
+            // Routing logica
+            switch (settings.name) {
+              case '/':
+                page = const HomePage();
+                break;
+              case '/add_event_screen':
+                page = const AddEventScreen();
+                break;
+              case '/edit_event_screen':
+                final event = settings.arguments as Event;
+                page = EditEventScreen(event: event);
+                break;
+              default:
+                page = const HomePage(); // fallback
+            }
+
+            // Slide animatie voor álle routes
+            return PageRouteBuilder(
+              settings: settings,
+              transitionDuration: const Duration(milliseconds: 300),
+              reverseTransitionDuration: const Duration(milliseconds: 300),
+              pageBuilder: (_, animation, __) => page,
+              transitionsBuilder: (_, animation, __, child) {
+                const begin = Offset(1.0, 0.0); // slide vanaf rechts
+                const end = Offset.zero;
+                final tween = Tween(
+                  begin: begin,
+                  end: end,
+                ).chain(CurveTween(curve: Curves.easeInOut));
+
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
+                );
+              },
+            );
           },
         );
       },
