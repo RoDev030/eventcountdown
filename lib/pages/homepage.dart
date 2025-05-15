@@ -1,6 +1,4 @@
-import 'package:eventcountdown/widgets/custom_app_bar.dart';
-import 'package:eventcountdown/widgets/custom_drawer.dart';
-import 'package:eventcountdown/widgets/custom_floating_action_button.dart';
+import 'package:eventcountdown/widgets/custom_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/event_database.dart';
@@ -16,8 +14,7 @@ class HomePage extends StatelessWidget {
     final eventDatabase = Provider.of<EventDatabase>(context);
 
     return Scaffold(
-      appBar: CustomAppBar(title: 'Mijn Events'),
-      drawer: CustomDrawer(),
+      bottomNavigationBar: CustomBottomNavBar(),
       body: ValueListenableBuilder(
         valueListenable: eventDatabase.listenToEvents(),
         builder: (context, Box<Event> box, _) {
@@ -29,9 +26,6 @@ class HomePage extends StatelessWidget {
 
           return EventPageView(events: events);
         },
-      ),
-      floatingActionButton: CustomFloatingActionButton(
-        routeName: '/add_event_screen',
       ),
     );
   }

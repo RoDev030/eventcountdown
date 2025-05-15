@@ -1,4 +1,5 @@
 import 'package:eventcountdown/utilities/pop_scope.dart';
+import 'package:eventcountdown/widgets/custom_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:eventcountdown/widgets/event_form.dart';
 import 'package:eventcountdown/widgets/event_image_picker.dart';
@@ -114,6 +115,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
       hasChanges: hasChanges,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
+        bottomNavigationBar: CustomBottomNavBar(),
         appBar: AppBar(
           title: const Text("Bewerk Event"),
           actions: [

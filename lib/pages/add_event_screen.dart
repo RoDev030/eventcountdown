@@ -1,5 +1,6 @@
 import 'package:eventcountdown/utilities/pop_scope.dart';
 import 'package:eventcountdown/utilities/submit_event.dart';
+import 'package:eventcountdown/widgets/custom_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:eventcountdown/widgets/event_form.dart';
 import 'package:eventcountdown/widgets/event_image_picker.dart';
@@ -46,6 +47,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
     return ConfirmOnPop(
       hasChanges: hasChanges,
       child: Scaffold(
+        bottomNavigationBar: CustomBottomNavBar(),
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: const Text("New Event"),

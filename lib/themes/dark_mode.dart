@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 final ThemeData darkMode = ThemeData(
   brightness: Brightness.dark,
   colorScheme: ColorScheme.dark(
-    primary: Color(0xFF3D5AFE),
-    secondary: Color(0xFF5E6EFF),
-    // ignore: deprecated_member_use
-    background: Color(0xFF121212),
-    surface: Color(0xFF1E1E1E),
-    onPrimary: Colors.white,
-    onSecondary: Colors.white,
-    // ignore: deprecated_member_use
-    onBackground: Colors.white70,
-    onSurface: Colors.white70,
+    primary: Color(0xFF8E3A59), // Deep rose pink for primary
+    secondary: Color(0xFF6D214F), // Darker pink for secondary
+    background: Color(0xFF2C1E2E), // Dark plum for background
+    surface: Color(
+      0xFF3E2C3A,
+    ), // Slightly lighter plum for cards, sheets, dialogs
+    onPrimary: Colors.white, // Text on primary
+    onSecondary: Colors.white, // Text on secondary
+    onBackground: Colors.white70, // Text on background
+    onSurface: Colors.white70, // Text on surface
   ),
   useMaterial3: true,
 );
