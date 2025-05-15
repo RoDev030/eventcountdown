@@ -1,4 +1,5 @@
 import 'package:eventcountdown/pages/edit_event_screen.dart';
+import 'package:eventcountdown/utilities/app_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'pages/add_event_screen.dart';
@@ -41,43 +42,18 @@ class MyApp extends StatelessWidget {
           theme: themeProvider.themeData,
           initialRoute: '/',
           onGenerateRoute: (settings) {
-            Widget page;
-
-            // Routing logica
-            switch (settings.name) {
-              case '/':
-                page = const HomePage();
-                break;
-              case '/add_event_screen':
-                page = const AddEventScreen();
-                break;
-              case '/edit_event_screen':
-                final event = settings.arguments as Event;
-                page = EditEventScreen(event: event);
-                break;
-              default:
-                page = const HomePage(); // fallback
+            // HomePage zonder animatie op start
+            if (settings.name == '/') {
+              return MaterialPageRoute(
+                builder: (_) => const HomePage(),
+                settings: settings,
+              );
             }
 
-            // Slide animatie voor álle routes
-            return PageRouteBuilder(
-              settings: settings,
-              transitionDuration: const Duration(milliseconds: 300),
-              reverseTransitionDuration: const Duration(milliseconds: 300),
-              pageBuilder: (_, animation, __) => page,
-              transitionsBuilder: (_, animation, __, child) {
-                const begin = Offset(1.0, 0.0); // slide vanaf rechts
-                const end = Offset.zero;
-                final tween = Tween(
-                  begin: begin,
-                  end: end,
-                ).chain(CurveTween(curve: Curves.easeInOut));
-
-                return SlideTransition(
-                  position: animation.drive(tween),
-                  child: child,
-                );
-              },
+            // Andere routes worden via AppNavigator aangemaakt
+            return AppNavigator.createRoute(
+              settings.name!,
+              arguments: settings.arguments,
             );
           },
         );
