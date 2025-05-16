@@ -12,6 +12,7 @@ Future<void> submitEvent({
   required TextEditingController locationController,
   required TextEditingController descriptionController,
   String? eventImagePath,
+  VoidCallback? onSuccess, // <-- Toegevoegd
 }) async {
   if (!formKey.currentState!.validate()) return;
 
@@ -41,7 +42,9 @@ Future<void> submitEvent({
     context,
   ).showSnackBar(const SnackBar(content: Text("Event toegevoegd!")));
 
-  Navigator.pop(context);
+  if (onSuccess != null) {
+    onSuccess();
+  }
 }
 
 DateTime _parseFlexibleTime(String timeString) {

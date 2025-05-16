@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/event.dart';
+import '../../models/event.dart';
 import 'event_card.dart';
 
 class EventPageView extends StatelessWidget {

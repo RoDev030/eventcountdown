@@ -1,12 +1,12 @@
 import 'package:eventcountdown/utilities/pop_scope.dart';
-import 'package:eventcountdown/widgets/custom_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:eventcountdown/widgets/event_form.dart';
-import 'package:eventcountdown/widgets/event_image_picker.dart';
-import 'package:eventcountdown/widgets/event_submit_button.dart';
+import 'package:eventcountdown/widgets/events/event_form.dart';
+import 'package:eventcountdown/widgets/events/event_image_picker.dart';
+import 'package:eventcountdown/widgets/events/event_submit_button.dart';
 import 'package:provider/provider.dart';
 import '../models/event.dart';
 import '../models/event_database.dart';
+import 'package:intl/intl.dart';
 
 class EditEventScreen extends StatefulWidget {
   final Event event;
@@ -35,7 +35,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
     _dateController = TextEditingController(
       text: widget.event.eventDateTime.toLocal().toString().split(' ')[0],
     );
-    _timeController = TextEditingController(); // ← tijdelijk leeg
+    _timeController = TextEditingController();
 
     _locationController = TextEditingController(
       text: widget.event.eventLocation,
@@ -71,31 +71,36 @@ class _EditEventScreenState extends State<EditEventScreen> {
 
   void _saveChanges() {
     if (_formKey.currentState!.validate()) {
-      // Combine date and time into DateTime
-      final dateParts = _dateController.text.split('-');
-      final timeParts = _timeController.text.split(':');
-      final parsedDateTime = DateTime(
-        int.parse(dateParts[0]),
-        int.parse(dateParts[1]),
-        int.parse(dateParts[2]),
-        int.parse(timeParts[0]),
-        int.parse(timeParts[1]),
-      );
+      try {
+        final date = DateFormat('yyyy-MM-dd').parse(_dateController.text);
+        final time = _parseFlexibleTime(_timeController.text);
+        final combinedDateTime = DateTime(
+          date.year,
+          date.month,
+          date.day,
+          time.hour,
+          time.minute,
+        );
 
-      final updatedEvent = Event(
-        id: widget.event.id, // belangrijk!
-        eventName: _nameController.text,
-        eventDateTime: parsedDateTime,
-        eventLocation: _locationController.text,
-        eventDescription: _descriptionController.text,
-        eventImagePath: _eventImagePath,
-      );
+        final updatedEvent = Event(
+          id: widget.event.id,
+          eventName: _nameController.text,
+          eventDateTime: combinedDateTime,
+          eventLocation: _locationController.text,
+          eventDescription: _descriptionController.text,
+          eventImagePath: _eventImagePath,
+        );
 
-      Provider.of<EventDatabase>(
-        context,
-        listen: false,
-      ).updateEvent(updatedEvent);
-      Navigator.pop(context);
+        Provider.of<EventDatabase>(
+          context,
+          listen: false,
+        ).updateEvent(updatedEvent);
+        Navigator.pop(context);
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Ongeldig tijd- of datumformaat")),
+        );
+      }
     }
   }
 
@@ -115,7 +120,6 @@ class _EditEventScreenState extends State<EditEventScreen> {
       hasChanges: hasChanges,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        bottomNavigationBar: CustomBottomNavBar(),
         appBar: AppBar(
           title: const Text("Bewerk Event"),
           actions: [
@@ -163,4 +167,14 @@ class _EditEventScreenState extends State<EditEventScreen> {
       ),
     );
   }
+}
+
+DateTime _parseFlexibleTime(String timeString) {
+  final formats = [DateFormat('HH:mm'), DateFormat('h:mm a')];
+  for (final format in formats) {
+    try {
+      return format.parse(timeString);
+    } catch (_) {}
+  }
+  throw FormatException('Geen geldig tijdformaat: $timeString');
 }

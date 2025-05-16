@@ -22,6 +22,14 @@ class EventImagePicker extends StatelessWidget {
             Text('\t \t Select \n background'),
             SizedBox(width: 8.0),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor:
+                    Theme.of(
+                      context,
+                    ).colorScheme.onPrimary, // tekst & icon kleur
+                backgroundColor:
+                    Theme.of(context).colorScheme.primary, // achtergrondkleur
+              ),
               onPressed: () async {
                 try {
                   final image = await pickImage();

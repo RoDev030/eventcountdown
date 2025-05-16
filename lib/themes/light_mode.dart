@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 final ThemeData lightMode = ThemeData(
   brightness: Brightness.light,
   colorScheme: ColorScheme.light(
-    primary: Color(0xFFFADADD), // Soft pink as primary color
+    primary: Color.fromARGB(255, 239, 142, 207), // Soft pink as primary color
     secondary: Color(0xFFF9A8D4), // Light rose pink for secondary
     background: Color(0xFFFFF1F3), // Very light pink for background
     surface: Color.fromARGB(

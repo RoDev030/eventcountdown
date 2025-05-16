@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'package:eventcountdown/models/event_database.dart';
+import 'package:eventcountdown/pages/edit_event_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:slide_countdown/slide_countdown.dart';
-import '../models/event.dart';
+import '../../models/event.dart';
 import 'package:provider/provider.dart';
 
 class EventCard extends StatefulWidget {
@@ -48,10 +49,12 @@ class _EventCardState extends State<EventCard> {
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop(); // sluit het dialoog
-                      Navigator.pushNamed(
+                      Navigator.push(
                         context,
-                        '/edit_event_screen',
-                        arguments: widget.event,
+                        MaterialPageRoute(
+                          builder:
+                              (context) => EditEventScreen(event: widget.event),
+                        ),
                       );
                     },
                     child: const Text('Edit'),

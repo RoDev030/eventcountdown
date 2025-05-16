@@ -1,13 +1,13 @@
 import 'package:eventcountdown/utilities/pop_scope.dart';
 import 'package:eventcountdown/utilities/submit_event.dart';
-import 'package:eventcountdown/widgets/custom_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:eventcountdown/widgets/event_form.dart';
-import 'package:eventcountdown/widgets/event_image_picker.dart';
-import 'package:eventcountdown/widgets/event_submit_button.dart';
+import 'package:eventcountdown/widgets/events/event_form.dart';
+import 'package:eventcountdown/widgets/events/event_image_picker.dart';
+import 'package:eventcountdown/widgets/events/event_submit_button.dart';
 
 class AddEventScreen extends StatefulWidget {
-  const AddEventScreen({super.key});
+  final VoidCallback? onEventAdded; // <-- Toegevoegd
+  const AddEventScreen({super.key, this.onEventAdded});
 
   @override
   State<AddEventScreen> createState() => _AddEventScreenState();
@@ -47,7 +47,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
     return ConfirmOnPop(
       hasChanges: hasChanges,
       child: Scaffold(
-        bottomNavigationBar: CustomBottomNavBar(),
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: const Text("New Event"),
@@ -64,6 +63,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     locationController: _locationController,
                     descriptionController: _descriptionController,
                     eventImagePath: _eventImagePath,
+                    onSuccess: widget.onEventAdded, // <-- Toegevoegd
                   ),
             ),
           ],
@@ -99,6 +99,18 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   locationController: _locationController,
                   descriptionController: _descriptionController,
                   eventImagePath: _eventImagePath,
+                  onPressed:
+                      () => submitEvent(
+                        context: context,
+                        formKey: _formkey,
+                        nameController: _nameController,
+                        dateController: _dateController,
+                        timeController: _timeController,
+                        locationController: _locationController,
+                        descriptionController: _descriptionController,
+                        eventImagePath: _eventImagePath,
+                        onSuccess: widget.onEventAdded, // <-- Toegevoegd
+                      ),
                 ),
               ],
             ),

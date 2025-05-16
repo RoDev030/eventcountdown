@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 final ThemeData darkMode = ThemeData(
   brightness: Brightness.dark,
   colorScheme: ColorScheme.dark(
-    primary: Color(0xFF8E3A59), // Deep rose pink for primary
+    primary: Color.fromARGB(255, 135, 84, 103), // Deep rose pink for primary
     secondary: Color(0xFF6D214F), // Darker pink for secondary
     background: Color(0xFF2C1E2E), // Dark plum for background
     surface: Color(

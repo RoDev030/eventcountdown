@@ -1,4 +1,5 @@
-import 'package:eventcountdown/utilities/app_navigator.dart';
+import 'package:eventcountdown/pages/main_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -39,13 +40,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: themeProvider.themeData,
-          initialRoute: '/',
-          onGenerateRoute: (settings) {
-            return AppNavigator.createRoute(
-              settings.name!,
-              arguments: settings.arguments,
-            );
-          },
+          home: const MainScreen(),
         );
       },
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../utilities/submit_event.dart';
+import '../../utilities/submit_event.dart';
 
 class EventSubmitButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -28,6 +28,12 @@ class EventSubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        foregroundColor:
+            Theme.of(context).colorScheme.onPrimary, // tekst & icon kleur
+        backgroundColor:
+            Theme.of(context).colorScheme.primary, // achtergrondkleur
+      ),
       onPressed:
           onPressed ??
           () => submitEvent(
