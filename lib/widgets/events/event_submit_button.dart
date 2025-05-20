@@ -36,16 +36,19 @@ class EventSubmitButton extends StatelessWidget {
       ),
       onPressed:
           onPressed ??
-          () => submitEvent(
-            context: context,
-            formKey: formKey,
-            nameController: nameController,
-            dateController: dateController,
-            timeController: timeController,
-            locationController: locationController,
-            descriptionController: descriptionController,
-            eventImagePath: eventImagePath,
-          ),
+          () {
+            FocusManager.instance.primaryFocus?.unfocus();
+            submitEvent(
+              context: context,
+              formKey: formKey,
+              nameController: nameController,
+              dateController: dateController,
+              timeController: timeController,
+              locationController: locationController,
+              descriptionController: descriptionController,
+              eventImagePath: eventImagePath,
+            );
+          },
       child: Text(buttonLabel),
     );
   }

@@ -15,9 +15,7 @@ Future<void> submitEvent({
   VoidCallback? onSuccess, // <-- Toegevoegd
 }) async {
   if (!formKey.currentState!.validate()) return;
-
   final eventDatabase = Provider.of<EventDatabase>(context, listen: false);
-
   final selectedDate = DateFormat('dd-MM-yyyy').parse(dateController.text);
   final parsedTime = _parseFlexibleTime(timeController.text);
   final selectedTime = TimeOfDay.fromDateTime(parsedTime);

@@ -33,7 +33,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
 
     _nameController = TextEditingController(text: widget.event.eventName);
     _dateController = TextEditingController(
-      text: widget.event.eventDateTime.toLocal().toString().split(' ')[0],
+      text: DateFormat('dd-MM-yyyy').format(widget.event.eventDateTime),
     );
     _timeController = TextEditingController();
 
@@ -50,7 +50,6 @@ class _EditEventScreenState extends State<EditEventScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    // hier mag je veilig context gebruiken
     _timeController.text = TimeOfDay.fromDateTime(
       widget.event.eventDateTime,
     ).format(context);
@@ -72,7 +71,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
   void _saveChanges() {
     if (_formKey.currentState!.validate()) {
       try {
-        final date = DateFormat('yyyy-MM-dd').parse(_dateController.text);
+        final date = DateFormat('dd-MM-yyyy').parse(_dateController.text);
         final time = _parseFlexibleTime(_timeController.text);
         final combinedDateTime = DateTime(
           date.year,

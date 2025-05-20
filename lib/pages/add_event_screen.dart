@@ -32,6 +32,17 @@ class _AddEventScreenState extends State<AddEventScreen> {
         _eventImagePath != null;
   }
 
+  void _clearForm() {
+    _nameController.clear();
+    _dateController.clear();
+    _timeController.clear();
+    _locationController.clear();
+    _descriptionController.clear();
+    setState(() {
+      _eventImagePath = null;
+    });
+  }
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -63,7 +74,12 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     locationController: _locationController,
                     descriptionController: _descriptionController,
                     eventImagePath: _eventImagePath,
-                    onSuccess: widget.onEventAdded, // <-- Toegevoegd
+                    onSuccess: () {
+                      _clearForm(); // <-- Controllers legen
+                      if (widget.onEventAdded != null) {
+                        widget.onEventAdded!();
+                      }
+                    },
                   ),
             ),
           ],
@@ -99,18 +115,25 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   locationController: _locationController,
                   descriptionController: _descriptionController,
                   eventImagePath: _eventImagePath,
-                  onPressed:
-                      () => submitEvent(
-                        context: context,
-                        formKey: _formkey,
-                        nameController: _nameController,
-                        dateController: _dateController,
-                        timeController: _timeController,
-                        locationController: _locationController,
-                        descriptionController: _descriptionController,
-                        eventImagePath: _eventImagePath,
-                        onSuccess: widget.onEventAdded, // <-- Toegevoegd
-                      ),
+                  onPressed: () {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    submitEvent(
+                      context: context,
+                      formKey: _formkey,
+                      nameController: _nameController,
+                      dateController: _dateController,
+                      timeController: _timeController,
+                      locationController: _locationController,
+                      descriptionController: _descriptionController,
+                      eventImagePath: _eventImagePath,
+                      onSuccess: () {
+                        _clearForm(); // <-- Controllers legen
+                        if (widget.onEventAdded != null) {
+                          widget.onEventAdded!();
+                        }
+                      },
+                    );
+                  },
                 ),
               ],
             ),
